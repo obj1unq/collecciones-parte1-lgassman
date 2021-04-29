@@ -1,1 +1,53 @@
-r
+import capos.*
+import artefactos.*
+
+test "rolando encuentra objetos" {
+	rolando.capacidad(2)
+	rolando.encontrar(espada)
+	assert.that(rolando.tiene(espada))
+	rolando.encontrar(libro)
+	assert.that(rolando.tiene(libro))
+	rolando.encontrar(collar)
+	assert.notThat(rolando.tiene(collar))
+	
+	assert.equals(#{espada, libro}, rolando.artefactos())
+}
+
+test "rolando llega al castillo" {
+	rolando.encontrar(espada)
+	rolando.encontrar(libro)
+	//rolando.llegar(castillo)
+	rolando.llegarACasa()
+	rolando.encontrar(collar)
+	rolando.llegarACasa()
+	//rolando.llegar(castillo)
+	assert.equals(#{espada, collar, libro}, castillo.artefactos())
+	
+}
+
+test "todos los artefactos de rolando" {
+	rolando.encontrar(collar)
+	rolando.encontrar(espada)
+	rolando.llegarACasa()
+	rolando.encontrar(armadura)
+	
+	assert.that(rolando.posee(collar))
+	assert.that(rolando.posee(armadura))
+	assert.that(rolando.posee(espada))
+	assert.notThat(rolando.posee(libro))
+	
+	assert.equals(#{ collar, armadura, espada}, rolando.posesiones())
+	
+}
+
+test "historia" {
+	
+	rolando.encontrar(espada)
+	rolando.encontrar(libro)
+	rolando.encontrar(collar)
+	rolando.llegarACasa()
+	rolando.encontrar(armadura)
+	rolando.encontrar(collar)
+	
+	assert.equals([espada, libro, collar, armadura, collar], rolando.historia())
+}
